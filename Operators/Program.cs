@@ -21,7 +21,6 @@ namespace Operators
     }
 
 
-
     class BinaryArithmeticOperatorsExample
     {
         public static void Run()
@@ -59,7 +58,6 @@ namespace Operators
             #endregion
         }
     }
-
 
 
     class LogicalOperatorsExample
@@ -139,6 +137,71 @@ namespace Operators
         }
     }
 
+
+    #region Operator Overloading
+
+    public class OperatorOverloadingExample
+    {
+        public struct SoPhuc
+        {
+            public double Thuc { get; }
+            public double Ao { get; }
+
+
+            public SoPhuc(double thuc, double ao)
+            {
+                Thuc = thuc;
+                Ao = ao;
+            }
+
+
+            public static SoPhuc operator +(SoPhuc a, SoPhuc b)
+            {
+                return new SoPhuc(a.Thuc + b.Thuc, a.Ao + b.Ao);
+            }
+
+
+            public static SoPhuc operator -(SoPhuc a, SoPhuc b)
+            {
+                return new SoPhuc(a.Thuc - b.Thuc, a.Ao - b.Ao);
+            }
+
+
+            public override string ToString()
+            {
+                // Sử dụng toán tử điều kiện để định dạng chuỗi cho đẹp hơn
+                return $"{Thuc} {(Ao >= 0 ? "+" : "-")} {Math.Abs(Ao)}i";
+            }
+        }
+
+
+        public static void Run()
+        {
+            Console.WriteLine("--- Ví dụ về Nạp chồng toán tử cho Số Phức ---");
+
+            // Khởi tạo hai đối tượng số phức
+            SoPhuc sp1 = new SoPhuc(3, 4); // 3 + 4i
+            SoPhuc sp2 = new SoPhuc(1, 2); // 1 + 2i
+
+            Console.WriteLine($"Số phức 1: {sp1}");
+            Console.WriteLine($"Số phức 2: {sp2}");
+            Console.WriteLine();
+
+            // Sử dụng các toán tử + và - đã được nạp chồng một cách tự nhiên
+            // Trình biên dịch sẽ tự động gọi các phương thức operator+ và operator- tương ứng. [2]
+            SoPhuc tong = sp1 + sp2;
+            SoPhuc hieu = sp1 - sp2;
+
+            // In kết quả ra màn hình
+            Console.WriteLine($"Tổng (sp1 + sp2): {tong}"); // Kết quả mong đợi: 4 + 6i
+            Console.WriteLine($"Hiệu (sp1 - sp2): {hieu}"); // Kết quả mong đợi: 2 + 2i
+            Console.WriteLine("---------------------------------------------");
+        }
+    }
+
+    #endregion
+
+
     class Program
     {
         public static bool DoStuff()
@@ -155,6 +218,7 @@ namespace Operators
             LogicalOperatorsExample.Run();
             ConditionalLogicalOperatorsExample.Run();
             BitwiseAndShiftOperatorsExample.Run();
+            OperatorOverloadingExample.Run();
         }
     }
 }
